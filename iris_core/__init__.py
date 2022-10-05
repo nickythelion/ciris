@@ -18,7 +18,10 @@ class PixelCoordinates:
             Tuple[int, int]: A tuple containing the coordinates: the first
             one is X, the second one is Y
         """
-        return [self.x, self.y]
+        return (
+            self.x,
+            self.y,
+        )
 
     def as_list(self) -> "List[int]":
         """Returns the coordinates as a list.
