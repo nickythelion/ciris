@@ -39,7 +39,6 @@ class Color:
         r: int,
         g: int,
         b: int,
-        pixels: List[List[int]],
     ) -> None:
 
         if not (0 <= r <= 255) or not (0 <= g <= 255) or not (0 <= b <= 255):
@@ -50,7 +49,6 @@ class Color:
         self.r = r
         self.g = g
         self.b = b
-        self.pixel_map = [PixelCoordinates(i[0], i[1]) for i in pixels]
 
     def as_hex(self) -> str:
         """Converts RGB to hex
@@ -147,5 +145,20 @@ class Color:
             round(value),
         )
 
+
+class PixelColor(Color):
+    def __init__(
+        self, r: int, g: int, b: int, pixels: List[List[int]]
+    ) -> None:
+
+        self.pixel_map = [PixelCoordinates(i[0], i[1]) for i in pixels]
+
+        super().__init__(r, g, b)
+
     def number_of_pixels(self) -> int:
+        """Returns the number of pixels that have the same color
+
+        Returns:
+            int: _description_
+        """
         return len(self.pixel_map)
