@@ -352,6 +352,68 @@ class PixelColor(Color):
 
         super().__init__(h, s, v)
 
+    @classmethod
+    def from_cmyk(
+        cls, c: int, m: int, y: int, k: int, pixels: List[List[int]]
+    ) -> Self:
+        """Creates the PixelColor object using CMYK namespace.
+        This function needs to be supplied with integers representing the percentages
+        of the color channels. For example, if CMYK color is defined like cmyk(76%, 0%, 11%, 0%),
+        then the functions' arguments will look like this: from_cmyk(76, 0, 11, 0, pixels)
+
+        Args:
+            c (int): Cyan
+            m (int): Magenta
+            y (int): Yellow
+            k (int): Key
+            pixels: the coordinates of pixels that share the same color ( e.g [[0, 1], [0, 2], [0, 3], ...])
+
+        """
+        cls.pixel_map = pixels
+        return super().from_cmyk(c, m, y, k)
+
+    @classmethod
+    def from_hex(cls, clr_hex: str, pixels: List[List[int]]) -> Self:
+        """Creates the Color object uning the HEX string
+
+        Args:
+            clr_hex (str): a hex-string (7-symbol). Other formats, such as a
+            9-symbol string, which includes opacity, is not supported at the moment.
+            The support may be added later, but for now any string that is not a 7-symbol
+            hex will throw an error
+            pixels: the coordinates of pixels that share the same color ( e.g [[0, 1], [0, 2], [0, 3], ...])
+
+        """
+        cls.pixel_map = pixels
+        return super().from_hex(clr_hex)
+
+    @classmethod
+    def from_hsv(cls, h: int, s: int, v: int, pixels: List[List[int]]) -> Self:
+        """Creates the Color object using the HSV color space. This function
+        is equivalent to direct initialization and was added for consistency
+
+        Args:
+            h (int): Hue
+            s (int): Saturation
+            v (int): Value
+            pixels: the coordinates of pixels that share the same color ( e.g [[0, 1], [0, 2], [0, 3], ...])
+        """
+        cls.pixel_map = pixels
+        return super().from_hsv(h, s, v)
+
+    @classmethod
+    def from_rgb(cls, r: int, g: int, b: int, pixels: List[List[int]]) -> Self:
+        """Initializes the Color class using RGB color space
+
+        Args:
+            r (int): Red
+            g (int): Green
+            b (int): Blue
+            pixels: the coordinates of pixels that share the same color ( e.g [[0, 1], [0, 2], [0, 3], ...])
+        """
+        cls.pixel_map = pixels
+        return super().from_rgb(r, g, b)
+
     def number_of_pixels(self) -> int:
         """Returns the number of pixels that have the same color
 
