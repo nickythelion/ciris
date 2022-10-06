@@ -52,6 +52,23 @@ class TestColor:
         with pytest.raises(ValueError):
             c = Color.from_hex(bad_hex)
 
+    def test_init_from_cmyk(self):
+        c, m, y, k = (76, 0, 11, 0)
+
+        c = Color.from_cmyk(c, m, y, k)
+
+        h, s, v = c.as_hsv()
+
+        assert h == 171
+        assert s == 76
+        assert v == 100
+
+    def test_init_from_cmyk_bad_values(self):
+        c, m, y, k = (101, -98, 77777, 64)
+
+        with pytest.raises(ValueError):
+            c = Color.from_cmyk(c, m, y, k)
+
     def test_color_as_hsv(self):
         h, s, v = (171, 76, 100)
 
@@ -82,3 +99,15 @@ class TestColor:
         hex_s = c.as_hex()
 
         assert hex_s == "#3DFFE2"
+
+    def test_color_as_cmyk(self):
+        h, s, v = (171, 76, 100)
+
+        c = Color.from_hsv(h, s, v)
+
+        c, m, y, k = c.as_cmyk()
+
+        assert c == 76
+        assert m == 0
+        assert y == 11
+        assert k == 0
