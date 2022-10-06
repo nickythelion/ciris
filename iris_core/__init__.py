@@ -126,6 +126,29 @@ class Color:
 
         return cls.from_rgb(r, g, b)
 
+    @classmethod
+    def from_cmyk(cls, c: int, m: int, y: int, k: int) -> Self:
+        if (
+            not (0 <= c <= 100)
+            or not (0 <= m <= 100)
+            or not (0 <= y <= 100)
+            or not (0 <= k <= 100)
+        ):
+            raise ValueError(
+                f"Expected C, M, Y, K to be in range [0..100], bu got {c}, {m}, {y}, {k}"
+            )
+
+        c = c * 0.01
+        m = m * 0.01
+        y = y * 0.01
+        k = k * 0.01
+
+        r = 255 * (1 - c) * (1 - k)
+        g = 255 * (1 - m) * (1 - k)
+        b = 255 * (1 - y) * (1 - k)
+
+        return cls.from_rgb(r, g, b)
+
     def as_hsv(self) -> "Tuple[int, int, int]":
         return (
             self.h,
@@ -206,6 +229,24 @@ class Color:
         b_hex = _convert_color_channel(b)
 
         return f"#{r_hex}{g_hex}{b_hex}"
+
+    def as_cmyk(self) -> "Tuple[int, int, int, int]":
+
+        r, g, b = self.as_rgb()
+
+        r_dash, g_dash, b_dash = r / 255, g / 255, b / 255
+
+        k = 1 - max(r_dash, g_dash, b_dash)
+        c = (1 - r_dash - k) / (1 - k)
+        m = (1 - g_dash - k) / (1 - k)
+        y = (1 - b_dash - k) / (1 - k)
+
+        return (
+            int(round(c, 2) * 100),
+            int(round(m, 2) * 100),
+            int(round(y, 2) * 100),
+            int(round(k, 2) * 100),
+        )
 
 
 class PixelColor(Color):
