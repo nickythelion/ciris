@@ -185,12 +185,12 @@ class Color:
 
 class PixelColor(Color):
     def __init__(
-        self, r: int, g: int, b: int, pixels: List[List[int]]
+        self, h: int, s: int, v: int, pixels: List[List[int]]
     ) -> None:
 
         self.pixel_map = [PixelCoordinates(i[0], i[1]) for i in pixels]
 
-        super().__init__(r, g, b)
+        super().__init__(h, s, v)
 
     def number_of_pixels(self) -> int:
         """Returns the number of pixels that have the same color
