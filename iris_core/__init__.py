@@ -21,6 +21,12 @@ class PixelCoordinates:
         self.x = x
         self.y = y
 
+    def __repr__(self) -> str:
+        return f"{self.__class__.__name__}(x={self.x}, y={self.y})"
+
+    def __str__(self) -> str:
+        return self.__repr__()
+
     def as_tuple(self) -> "Tuple[int, int]":
         """Returns the coordinates as a tuple of length 2
 
@@ -79,6 +85,12 @@ class Color:
         self.h = h
         self.s = s * 0.01  # Need to clamp the value in range [0..1]
         self.v = v * 0.01  # Need to clamp the value in range [0..1]
+
+    def __repr__(self) -> str:
+        return f"{self.__class__.__name__}(h={self.h}, s={self.s}, v={self.v})"
+
+    def __str__(self) -> str:
+        return self.__repr__
 
     @classmethod
     def from_rgb(cls, r: int, g: int, b: int) -> Self:
@@ -351,6 +363,12 @@ class PixelColor(Color):
         self.pixel_map = [PixelCoordinates(i[0], i[1]) for i in pixels]
 
         super().__init__(h, s, v)
+
+    def __repr__(self) -> str:
+        return f"{self.__class__.__name__}(h={self.h}, s={self.s}, v={self.v}, pixel_map={self.pixel_map}"
+
+    def __str__(self) -> str:
+        return self.__repr__()
 
     @classmethod
     def from_cmyk(
