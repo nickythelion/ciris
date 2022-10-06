@@ -1,6 +1,7 @@
 __version__ = "0.1.0"
 
 from typing import List, Tuple
+from typing_extensions import Self
 
 
 class PixelCoordinates:
@@ -56,7 +57,7 @@ class Color:
         self.v = v * 0.01  # Need to clamp the value in range [0..1]
 
     @classmethod
-    def from_rgb(cls, r: int, g: int, b: int):
+    def from_rgb(cls, r: int, g: int, b: int) -> Self:
 
         if not (0 <= r <= 255) or not (0 <= g <= 255) or not (0 <= b <= 255):
             raise ValueError(
@@ -101,11 +102,11 @@ class Color:
         )
 
     @classmethod
-    def from_hsv(cls, h: int, s: int, v: int):
+    def from_hsv(cls, h: int, s: int, v: int) -> Self:
         return cls(h, s, v)
 
     @classmethod
-    def from_hex(cls, clr_hex: str):
+    def from_hex(cls, clr_hex: str) -> Self:
 
         if len(clr_hex) != 7:
             raise ValueError(
@@ -126,7 +127,11 @@ class Color:
         return cls.from_rgb(r, g, b)
 
     def as_hsv(self) -> "Tuple[int, int, int]":
-        return (self.h, self.s * 100, self.v * 100)
+        return (
+            self.h,
+            self.s * 100,
+            self.v * 100,
+        )
 
     def as_rgb(self) -> "Tuple[int, int, int]":
         chroma = self.v * self.s
