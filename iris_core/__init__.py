@@ -6,6 +6,15 @@ from typing_extensions import Self
 
 class PixelCoordinates:
     def __init__(self, x: int, y: int) -> None:
+        """Creates a PixelCoordinates object
+
+        Args:
+            x (int): the X coordinate of a pixel
+            y (int): the Y coordinate of a pixel
+
+        Raises:
+            ValueError: if either X or Y is negative
+        """
         if x < 0 or y < 0:
             raise ValueError("Pixel coordinates cannot be negative")
 
@@ -29,13 +38,28 @@ class PixelCoordinates:
         This function is equivalent to list(PixelCoordinates.as_tuple())
 
         Returns:
-            List[int]: _description_
+            List[int]: A list os coordinates, containing X and Y coordinates
         """
         return list(self.as_tuple())
 
 
 class Color:
     def __init__(self, h: int, s: int, v: int) -> None:
+        """Creates a Color object. It uses HSV color scheme as its primary,
+        thus its usage is required for direct initialization (c = Color(...)).
+        For initializing the object using a different color space please use
+        the appropriate initializer function
+
+        Args:
+            h (int): Hue (from 0 up tp 360)
+            s (int): Saturation (from 0 up to 100)
+            v (int): Value (from 0 up to 100)
+
+        Raises:
+            ValueError: if Hue is not in range [0..360]
+            ValueError: if Saturation is not in range [0..100]
+            ValueError: if Value is not in range [0..100]
+        """
 
         if not (0 <= h <= 360):
             raise ValueError(
@@ -58,6 +82,16 @@ class Color:
 
     @classmethod
     def from_rgb(cls, r: int, g: int, b: int) -> Self:
+        """Initializes the Color class using RGB color space
+
+        Args:
+            r (int): Red
+            g (int): Green
+            b (int): Blue
+
+        Raises:
+            ValueError: if either of Red, Green or Blue is not in range [0..255]
+        """
 
         if not (0 <= r <= 255) or not (0 <= g <= 255) or not (0 <= b <= 255):
             raise ValueError(
@@ -103,11 +137,29 @@ class Color:
 
     @classmethod
     def from_hsv(cls, h: int, s: int, v: int) -> Self:
+        """Creates the Color object using the HSV color space. This function
+        is equivalent to direct initialization and was added for consistency
+
+        Args:
+            h (int): Hue
+            s (int): Saturation
+            v (int): Value
+        """
         return cls(h, s, v)
 
     @classmethod
     def from_hex(cls, clr_hex: str) -> Self:
+        """Creates the Color object uning the HEX string
 
+        Args:
+            clr_hex (str): a hex-string (7-symbol). Other formats, such as a
+            9-symbol string, which includes opacity, is not supported at the moment.
+            The support may be added later, but for now any string that is not a 7-symbol
+            hex will throw an error
+
+        Raises:
+            ValueError: is hex-string's format is unsupported
+        """
         if len(clr_hex) != 7:
             raise ValueError(
                 f"This function only accepts hex-strings in 6-digit format (e.g. #FFFFFF, #06AC9F). Other formats re not supported"
@@ -128,6 +180,20 @@ class Color:
 
     @classmethod
     def from_cmyk(cls, c: int, m: int, y: int, k: int) -> Self:
+        """Creates the Color object using CMYK namespace.
+        This function needs to be supplied with integers representing the percentages
+        of the color channels. For example, if CMYK color is defined like cmyk(76%, 0%, 11%, 0%),
+        then the functions' arguments will look like this: from_cmyk(76, 0, 11, 0)
+
+        Args:
+            c (int): Cyan
+            m (int): Magenta
+            y (int): Yellow
+            k (int): Key
+
+        Raises:
+            ValueError: if either C, M, Y or K is not in range [0..100]
+        """
         if (
             not (0 <= c <= 100)
             or not (0 <= m <= 100)
@@ -150,6 +216,11 @@ class Color:
         return cls.from_rgb(r, g, b)
 
     def as_hsv(self) -> "Tuple[int, int, int]":
+        """Represents the current color in HSV color space
+
+        Returns:
+            Tuple[int, int, int]: a tuple containing Hue, Saturation and Value
+        """
         return (
             self.h,
             self.s * 100,
@@ -157,6 +228,11 @@ class Color:
         )
 
     def as_rgb(self) -> "Tuple[int, int, int]":
+        """Represents the current color in RGB color space
+
+        Returns:
+            Tuple[int, int, int]: a tuple containing Red, Green and Blue
+        """
         chroma = self.v * self.s
 
         h_dash = self.h / 60.0
@@ -194,6 +270,12 @@ class Color:
         )
 
     def as_hex(self) -> str:
+        """Represents the current color as a 7-symbol hex-string
+
+        Returns:
+            str: a hex-string
+        """
+
         def _convert_color_channel(val: int) -> str:
             HEXDIGITS = {
                 0: "0",
@@ -231,7 +313,11 @@ class Color:
         return f"#{r_hex}{g_hex}{b_hex}"
 
     def as_cmyk(self) -> "Tuple[int, int, int, int]":
+        """Represents the current color in CMYK color space
 
+        Returns:
+            Tuple[int, int, int, int]: a tuple containing Cyan, Magenta, Yellow and Key
+        """
         r, g, b = self.as_rgb()
 
         r_dash, g_dash, b_dash = r / 255, g / 255, b / 255
@@ -253,7 +339,15 @@ class PixelColor(Color):
     def __init__(
         self, h: int, s: int, v: int, pixels: List[List[int]]
     ) -> None:
+        """Creates a PixelColor class. It's a derivative of the Color class, thus
+        requiring an HSV color info
 
+        Args:
+            h (int): Hue (from 0 up to 360)
+            s (int): Saturation (from 0 up to 100)
+            v (int): Value (from 0 up to 100)
+            pixels (List[List[int]]): _description_
+        """
         self.pixel_map = [PixelCoordinates(i[0], i[1]) for i in pixels]
 
         super().__init__(h, s, v)
