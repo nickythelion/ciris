@@ -7,50 +7,60 @@ def test_version():
 
 
 class TestColor:
-    def test_color_initialization(self):
+    def test_init_from_hsv(self):
+        h, s, v = (171, 76, 100)
 
-        c = Color(100, 100, 100)
+        c = Color.from_hsv(h, s, v)
 
-        assert c.r == 100
-        assert c.g == 100
-        assert c.b == 100
+        assert c.h == 171
+        assert c.s == 0.76
+        assert c.v == 1.0
 
-    def test_initialization_out_of_range_values(self):
+    def test_init_from_rgb(self):
+        r, g, b = (61, 255, 226)
 
-        with pytest.raises(ValueError):
-            c = Color(1000, 260, -100)
+        c = Color.from_rgb(r, g, b)
 
-    def test_color_hex(self):
+        assert c.h == 171
+        assert c.s == 0.76
+        assert c.v == 1.0
 
-        color_black = "#000000"
-        color_white = "#FFFFFF"
-        color_random = "#34CF89"
+    def test_init_from_hex(self):
+        hex_str = "#3dffe2"
 
-        b = Color(0, 0, 0)
-        w = Color(255, 255, 255)
-        r = Color(52, 207, 137)
+        c = Color.from_hex(hex_str)
 
-        assert b.as_hex() == color_black
-        assert w.as_hex() == color_white
-        assert r.as_hex() == color_random
+        assert c.h == 171
+        assert c.s == 0.76
+        assert c.v == 1.0
 
-    def test_color_rgb(self):
+    def test_color_as_hsv(self):
+        h, s, v = (171, 76, 100)
 
-        c = Color(0, 0, 0)
+        c = Color.from_hsv(h, s, v)
+
+        h1, s1, v1 = c.as_hsv()
+
+        assert h1 == 171
+        assert s1 == 76
+        assert v1 == 100
+
+    def test_color_as_rgb(self):
+        h, s, v = (171, 76, 100)
+
+        c = Color.from_hsv(h, s, v)
 
         r, g, b = c.as_rgb()
 
-        assert r == 0
-        assert g == 0
-        assert b == 0
+        assert r == 61
+        assert g == 255
+        assert b == 226
 
-    def test_color_hsv(self):
-        random_hsv = (145, 59, 58)
+    def test_color_as_hex(self):
+        h, s, v = (171, 76, 100)
 
-        c = Color(61, 148, 97)
+        c = Color.from_hsv(h, s, v)
 
-        hsv = c.as_hsv()
+        hex_s = c.as_hex()
 
-        assert hsv[0] == random_hsv[0]
-        assert hsv[1] == random_hsv[1]
-        assert hsv[2] == random_hsv[2]
+        assert hex_s == "#3DFFE2"
