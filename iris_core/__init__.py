@@ -34,83 +34,18 @@ class PixelCoordinates:
 
 
 class Color:
-    def __init__(
-        self,
-        r: int,
-        g: int,
-        b: int,
-    ) -> None:
+    def __init__(self, h: int, s: int, v: int) -> None:
 
-        if not (0 <= r <= 255) or not (0 <= g <= 255) or not (0 <= b <= 255):
-            raise ValueError(
-                "expected RGB channel values to be in [0..255] range"
-            )
+        self.h = h
+        self.s = s * 0.01  # Need to clamp the value in range [0..1]
+        self.v = v * 0.01  # Need to clamp the value in range [0..1]
 
-        self.r = r
-        self.g = g
-        self.b = b
+    @classmethod
+    def from_rgb(cls, r: int, g: int, b: int):
 
-    def as_hex(self) -> str:
-        """Converts RGB to hex
-
-        Returns:
-            str: a hex representation of the color
-        """
-
-        def _convert(val: int) -> str:
-            """Converts a color RGB channel value into its corresponding
-            color hex value
-
-            Args:
-                val (int): color channel value [0...255]
-
-            Returns:
-                str: a hex value of that color channel
-            """
-            HEX_DIGMAP = {10: "A", 11: "B", 12: "C", 13: "D", 14: "E", 15: "F"}
-
-            val_div = val / 16
-
-            first = (
-                HEX_DIGMAP[int(val_div)]
-                if int(val_div) > 9
-                else str(int(val_div))
-            )
-
-            rem = int((val_div - int(val_div)) * 16)
-
-            second = HEX_DIGMAP[rem] if rem > 9 else str(rem)
-
-            return f"{first}{second}"
-
-        r_hex = _convert(self.r)
-        g_hex = _convert(self.g)
-        b_hex = _convert(self.b)
-
-        return f"#{r_hex}{g_hex}{b_hex}"
-
-    def as_rgb(self) -> "Tuple[int, int, int]":
-        """Returns the RGB representation of the color
-
-        Returns:
-            Tuple[int, int, int]: _description_
-        """
-        return (
-            self.r,
-            self.g,
-            self.b,
-        )
-
-    def as_hsv(self) -> "Tuple[int, int, int]":
-        """Returns the HSV representation of the color
-
-        Returns:
-            Tuple[int, int, int]: a tuple containing hue (0 - 360), saturation (0 - 100), value (0 - 100)
-        """
-
-        r_clamp = self.r / 255
-        g_clamp = self.g / 255
-        b_clamp = self.b / 255
+        r_clamp = r / 255
+        g_clamp = g / 255
+        b_clamp = b / 255
 
         c_max = max(r_clamp, g_clamp, b_clamp)
         c_min = min(r_clamp, g_clamp, b_clamp)
@@ -139,11 +74,113 @@ class Color:
         # Get Value
         value = c_max * 100
 
-        return (
-            round(hue),
-            round(saturation),
-            round(value),
+        return cls(
+            int(round(hue)),
+            int(round(saturation)),
+            int(round(value)),
         )
+
+    @classmethod
+    def from_hsv(cls, h: int, s: int, v: int):
+        return cls(h, s, v)
+
+    @classmethod
+    def from_hex(cls, clr_hex: str):
+
+        if len(clr_hex) != 7:
+            raise ValueError(
+                f"This function only accepts hex-strings in 6-digit format (e.g. #FFFFFF, #06AC9F). Other formats re not supported"
+            )
+
+        clr_hex = clr_hex.replace("#", "")
+
+        chl_size = len(clr_hex) // 3  # Three channles: R, G, B
+
+        clhrs = [
+            clr_hex[ch : ch + chl_size]
+            for ch in range(0, len(clr_hex), chl_size)
+        ]
+
+        r, g, b = (int(chl, base=16) for chl in clhrs)
+
+        return cls.from_rgb(r, g, b)
+
+    def as_hsv(self) -> "Tuple[int, int, int]":
+        return (self.h, self.s * 100, self.v * 100)
+
+    def as_rgb(self) -> "Tuple[int, int, int]":
+        chroma = self.v * self.s
+
+        h_dash = self.h / 60.0
+
+        x_buf = chroma * (1 - abs(h_dash % 2 - 1))
+
+        if 0 <= h_dash < 1:
+            rgb_d = (chroma, x_buf, 0)
+
+        if 1 <= h_dash < 2:
+            rgb_d = (x_buf, chroma, 0)
+
+        if 2 <= h_dash < 3:
+            rgb_d = (0, chroma, x_buf)
+
+        if 3 <= h_dash < 4:
+            rgb_d = (0, x_buf, chroma)
+
+        if 4 <= h_dash < 5:
+            rgb_d = (x_buf, 0, chroma)
+
+        if 5 <= h_dash < 6:
+            rgb_d = (chroma, 0, x_buf)
+
+        m = self.v - chroma
+
+        r1, g1, b1 = rgb_d
+
+        r, g, b = (r1 + m, g1 + m, b1 + m)
+
+        return (
+            round(r * 255),
+            round(g * 255),
+            round(b * 255),
+        )
+
+    def as_hex(self) -> str:
+        def _convert_color_channel(val: int) -> str:
+            HEXDIGITS = {
+                0: "0",
+                1: "1",
+                2: "2",
+                3: "3",
+                4: "4",
+                5: "5",
+                6: "6",
+                7: "7",
+                8: "8",
+                9: "9",
+                10: "A",
+                11: "B",
+                12: "C",
+                13: "D",
+                14: "E",
+                15: "F",
+            }
+
+            div = val / 16
+            first = HEXDIGITS[int(div)]
+
+            rem = int((div - int(div)) * 16)
+            second = HEXDIGITS[rem]
+
+            return f"{first}{second}"
+
+        r, g, b = self.as_rgb()
+
+        r_hex = _convert_color_channel(r)
+        g_hex = _convert_color_channel(g)
+        b_hex = _convert_color_channel(b)
+
+        return f"#{r_hex}{g_hex}{b_hex}"
 
 
 class PixelColor(Color):
