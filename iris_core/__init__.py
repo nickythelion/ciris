@@ -159,6 +159,6 @@ class PixelColor(Color):
         """Returns the number of pixels that have the same color
 
         Returns:
-            int: _description_
+            int: how many pixels sin an image have this color
         """
         return len(self.pixel_map)
