@@ -16,6 +16,12 @@ class TestColor:
         assert c.s == 0.76
         assert c.v == 1.0
 
+    def test_init_from_hsv_bad_values(self):
+        h, s, v = (10000, -99, 1939)
+
+        with pytest.raises(ValueError):
+            c = Color(h, s, v)
+
     def test_init_from_rgb(self):
         r, g, b = (61, 255, 226)
 
@@ -25,6 +31,12 @@ class TestColor:
         assert c.s == 0.76
         assert c.v == 1.0
 
+    def test_init_from_rgb(self):
+        r, g, b = (100, 555, -98)
+
+        with pytest.raises(ValueError):
+            c = Color.from_rgb(r, g, b)
+
     def test_init_from_hex(self):
         hex_str = "#3dffe2"
 
@@ -33,6 +45,12 @@ class TestColor:
         assert c.h == 171
         assert c.s == 0.76
         assert c.v == 1.0
+
+    def test_init_from_hex_bad_str(self):
+        bad_hex = "#FFFFFF00"
+
+        with pytest.raises(ValueError):
+            c = Color.from_hex(bad_hex)
 
     def test_color_as_hsv(self):
         h, s, v = (171, 76, 100)
