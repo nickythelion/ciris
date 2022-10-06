@@ -6,7 +6,7 @@ from typing import List, Tuple
 class PixelCoordinates:
     def __init__(self, x: int, y: int) -> None:
         if x < 0 or y < 0:
-            raise ValueError("Coordinates cannot be negative")
+            raise ValueError("Pixel coordinates cannot be negative")
 
         self.x = x
         self.y = y
@@ -36,12 +36,32 @@ class PixelCoordinates:
 class Color:
     def __init__(self, h: int, s: int, v: int) -> None:
 
+        if not (0 <= h <= 360):
+            raise ValueError(
+                f"Expected Hue to be in range [0..360], but got {h}"
+            )
+
+        if not (0 <= s <= 100):
+            raise ValueError(
+                f"Expected Saturation to be in range [0..100], but got {s}"
+            )
+
+        if not (0 <= v <= 100):
+            raise ValueError(
+                f"Expected Value to be in range [0..100], but got {v}"
+            )
+
         self.h = h
         self.s = s * 0.01  # Need to clamp the value in range [0..1]
         self.v = v * 0.01  # Need to clamp the value in range [0..1]
 
     @classmethod
     def from_rgb(cls, r: int, g: int, b: int):
+
+        if not (0 <= r <= 255) or not (0 <= g <= 255) or not (0 <= b <= 255):
+            raise ValueError(
+                f"Expected R, G, B channel values to be in range [0..255], but got {r}, {g}, {b}"
+            )
 
         r_clamp = r / 255
         g_clamp = g / 255
