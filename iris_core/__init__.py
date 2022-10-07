@@ -346,6 +346,54 @@ class Color:
             int(round(k, 2) * 100),
         )
 
+    def hue_shift(self, amount: int) -> None:
+        """Shifts the color's hue by a specified amount.
+
+        Args:
+            amount (int): amount to shift hue by
+        """
+
+        new_hue = self.h + amount
+
+        if new_hue > 360:
+            new_hue = new_hue - 360
+
+        if new_hue < 0:
+            new_hue = 360 + new_hue
+
+        self.h = new_hue
+
+    def lighten(self, amount: int) -> None:
+        """Lightens the color by a specified percentage. For example,
+        if you need to lighten a color by 25%, the function call will look like
+        color_obj.lighten(25)
+
+        Args:
+            amount (int): the amount to lighten the color by
+        """
+        new_value = self.v + amount * 0.01
+
+        if new_value > 1.0:
+            new_value = 1.0
+
+        if new_value < 0.0:
+            new_value = 0.0
+
+        self.v = new_value
+
+    def darken(self, amount: int) -> None:
+        """Darkens the color by a specified percentage. For example,
+        if you need to darken a color by 25%, the function call will look like
+        color_obj.darken(25)
+
+        Args:
+            amount (int): the amount to darken the color by
+
+        Args:
+            amount (int): _description_
+        """
+        self.lighten(amount * -1)
+
 
 class PixelColor(Color):
     def __init__(
