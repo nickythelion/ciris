@@ -111,3 +111,67 @@ class TestColor:
         assert m == 0
         assert y == 11
         assert k == 0
+
+    def test_color_hue_shift_positive(self):
+        h, s, v = (171, 76, 100)
+        c = Color.from_hsv(h, s, v)
+
+        c.hue_shift(21)
+
+        assert c.as_hex() == "#3DD8FF"
+
+    def test_color_hue_shift_negative(self):
+        h, s, v = (171, 76, 100)
+        c = Color.from_hsv(h, s, v)
+
+        c.hue_shift(-21)
+
+        assert c.as_hex() == "#3DFF9E"
+
+    def test_color_hue_shift_positive_loop_around(self):
+        h, s, v = (171, 76, 100)
+        c = Color.from_hsv(h, s, v)
+
+        c.hue_shift(210)
+
+        assert c.as_hex() == "#FF813D"
+
+    def test_color_hue_shift_negative_loop_around(self):
+        h, s, v = (171, 76, 100)
+        c = Color.from_hsv(h, s, v)
+
+        c.hue_shift(-210)
+
+        assert c.as_hex() == "#FF3DBB"
+
+    def test_color_lighten_in_bounds(self):
+        h, s, v = (171, 76, 40)
+        c = Color.from_hsv(h, s, v)
+
+        c.lighten(50)
+
+        assert c.as_hex() == "#37E6CB"
+
+    def test_color_lighten_cap(self):
+        h, s, v = (171, 76, 50)
+        c = Color.from_hsv(h, s, v)
+
+        c.lighten(150)
+
+        assert c.as_hex() == "#3DFFE2"
+
+    def test_color_darken_in_bounds(self):
+        h, s, v = (171, 76, 100)
+        c = Color.from_hsv(h, s, v)
+
+        c.darken(15)
+
+        assert c.as_hex() == "#34D9C0"
+
+    def test_color_darken_out_of_bound(self):
+        h, s, v = (171, 76, 100)
+        c = Color.from_hsv(h, s, v)
+
+        c.darken(150)
+
+        assert c.as_hex() == "#000000"
