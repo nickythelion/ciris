@@ -192,3 +192,23 @@ class TestColor:
         )
 
         assert new_color == "#BF2E44"
+
+    def test_color_adjust_saturation(self):
+        h, s, v = (171, 76, 100)
+        c = Color.from_hsv(h, s, v)
+
+        c.adjust_saturation(-30)
+
+        assert c.as_hex() == "#8AFFED"
+
+    def test_color_adjust_saturation_capping(self):
+
+        h, s, v = (171, 76, 100)
+        c = Color.from_hsv(h, s, v)
+        c1 = Color.from_hsv(h, s, v)
+
+        c.adjust_saturation(10000)
+        c1.adjust_saturation(-10000)
+
+        assert c.as_hex() == "#00FFD9"
+        assert c1.as_hex() == "#FFFFFF"

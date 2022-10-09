@@ -406,6 +406,29 @@ class Color:
 
         return self
 
+    def adjust_saturation(self, percentage: int) -> Self:
+        """Adjusts the color's saturation level.
+
+        Args:
+            percentage (int): how much to adjust the level by. If the adjustment
+            brings the saturation level out of range [0..100], then the level will be
+            capped. For example, calling Color.adjust_saturation(-10000) on cyan
+            will make the color white.
+        """
+        new_s = self.s + percentage * 0.01
+
+        if new_s > 1.0:
+            new_s = 1.0
+
+        if new_s < 0.0:
+            new_s = 0.0
+
+        print(new_s)
+
+        self.s = new_s
+
+        return self
+
 
 class PixelColor(Color):
     def __init__(
