@@ -175,3 +175,11 @@ class TestColor:
         c.darken(150)
 
         assert c.as_hex() == "#000000"
+
+    def test_color_invert(self):
+        h, s, v = (171, 76, 100)
+        c = Color.from_hsv(h, s, v)
+
+        c.invert()
+
+        assert c.as_hex() == "#FF3D5A"

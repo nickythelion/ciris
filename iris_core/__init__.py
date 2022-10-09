@@ -394,6 +394,12 @@ class Color:
         """
         self.lighten(amount * -1)
 
+    def invert(self) -> Self:
+        """Inverts the current color"""
+        self.hue_shift(180)
+
+        return self
+
 
 class PixelColor(Color):
     def __init__(
