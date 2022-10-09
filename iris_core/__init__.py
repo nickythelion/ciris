@@ -423,8 +423,6 @@ class Color:
         if new_s < 0.0:
             new_s = 0.0
 
-        print(new_s)
-
         self.s = new_s
 
         return self
