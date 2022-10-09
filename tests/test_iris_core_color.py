@@ -183,3 +183,12 @@ class TestColor:
         c.invert()
 
         assert c.as_hex() == "#FF3D5A"
+
+    def test_color_method_chaining(self):
+        h, s, v = (171, 76, 100)
+
+        new_color = (
+            Color.from_hsv(h, s, v).darken(50).lighten(25).invert().as_hex()
+        )
+
+        assert new_color == "#BF2E44"

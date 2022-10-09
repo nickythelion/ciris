@@ -5,7 +5,7 @@ from typing_extensions import Self
 
 
 class PixelCoordinates:
-    def __init__(self, x: int, y: int) -> None:
+    def __init__(self, x: int, y: int) -> Self:
         """Creates a PixelCoordinates object
 
         Args:
@@ -346,7 +346,7 @@ class Color:
             int(round(k, 2) * 100),
         )
 
-    def hue_shift(self, amount: int) -> None:
+    def hue_shift(self, amount: int) -> Self:
         """Shifts the color's hue by a specified amount.
 
         Args:
@@ -363,7 +363,9 @@ class Color:
 
         self.h = new_hue
 
-    def lighten(self, amount: int) -> None:
+        return self
+
+    def lighten(self, amount: int) -> Self:
         """Lightens the color by a specified percentage. For example,
         if you need to lighten a color by 25%, the function call will look like
         color_obj.lighten(25)
@@ -381,7 +383,9 @@ class Color:
 
         self.v = new_value
 
-    def darken(self, amount: int) -> None:
+        return self
+
+    def darken(self, amount: int) -> Self:
         """Darkens the color by a specified percentage. For example,
         if you need to darken a color by 25%, the function call will look like
         color_obj.darken(25)
@@ -394,6 +398,8 @@ class Color:
         """
         self.lighten(amount * -1)
 
+        return self
+
     def invert(self) -> Self:
         """Inverts the current color"""
         self.hue_shift(180)
@@ -404,7 +410,7 @@ class Color:
 class PixelColor(Color):
     def __init__(
         self, h: int, s: int, v: int, pixels: List[List[int]]
-    ) -> None:
+    ) -> Self:
         """Creates a PixelColor class. It's a derivative of the Color class, thus
         requiring an HSV color info
 
