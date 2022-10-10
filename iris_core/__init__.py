@@ -109,7 +109,6 @@ class Color:
             raise ValueError(
                 f"Expected R, G, B channel values to be in range [0..255], but got {r}, {g}, {b}"
             )
-
         r_clamp = r / 255
         g_clamp = g / 255
         b_clamp = b / 255
@@ -124,13 +123,13 @@ class Color:
             hue = 0
 
         elif c_max == r_clamp:
-            hue = (60 * ((b_clamp - r_clamp) / delta) + 360) % 360
+            hue = 60 * (0 + (g_clamp - b_clamp) / delta)
 
         elif c_max == g_clamp:
-            hue = (60 * ((b_clamp - r_clamp) / delta) + 120) % 360
+            hue = 60 * (2 + (b_clamp - r_clamp) / delta)
 
         elif c_max == b_clamp:
-            hue = (60 * ((r_clamp - g_clamp) / delta) + 240) % 360
+            hue = 60 * (4 + (r_clamp - g_clamp) / delta)
 
         # Get  Saturation
         if c_max == 0:
@@ -220,6 +219,8 @@ class Color:
         m = m * 0.01
         y = y * 0.01
         k = k * 0.01
+
+        print(c, m, y, k)
 
         r = 255 * (1 - c) * (1 - k)
         g = 255 * (1 - m) * (1 - k)
