@@ -1,7 +1,9 @@
 __version__ = "0.1.0"
 
 from typing import List, Optional, Tuple
-from typing_extensions import Self
+from typing_extensions import Self, NewType
+
+PixelArray = NewType("PixelArray", List[List[int]])
 
 
 class PixelCoordinates:
@@ -426,3 +428,27 @@ class Color:
         self.s = new_s
 
         return self
+
+
+class ImageColor:
+    def __init__(self, color: Color, pixels: PixelArray) -> None:
+        self.color = color
+        self.pixel_map = [PixelCoordinates(i[0], i[1]) for i in pixels]
+
+    @classmethod
+    def from_rgb(cls, r: int, g: int, b: int, pixels: PixelArray) -> Self:
+        return cls(Color.from_rgb(r, g, b), pixels)
+
+    @classmethod
+    def from_hex(cls, hex_str: str, pixels: PixelArray) -> Self:
+        return cls(Color.from_hex(hex_str), pixels)
+
+    @classmethod
+    def from_hsv(cls, h: int, s: int, v: int, pixels: PixelArray) -> Self:
+        return cls(Color.from_hsv(h, s, v), pixels)
+
+    @classmethod
+    def from_cmyk(
+        cls, c: int, y: int, m: int, k: int, pixels: PixelArray
+    ) -> Self:
+        return cls(Color.from_cmyk(c, m, y, k), pixels)
