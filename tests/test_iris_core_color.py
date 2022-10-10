@@ -212,3 +212,16 @@ class TestColor:
 
         assert c.as_hex() == "#00FFD9"
         assert c1.as_hex() == "#FFFFFF"
+
+    # THIS COLOR BREAKS EVERYTHING
+    def test_strange_color(self):
+        r, g, b = (252, 186, 3)
+
+        c = Color.from_rgb(r, g, b)
+
+        c, m, y, k = c.as_cmyk()
+
+        assert c == 0
+        assert m == 26
+        assert y == 99
+        assert k == 1
