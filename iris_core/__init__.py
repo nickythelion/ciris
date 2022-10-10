@@ -126,10 +126,8 @@ class Color:
 
         elif c_max == r_clamp:
             hue = 60 * (0 + (g_clamp - b_clamp) / delta)
-
         elif c_max == g_clamp:
             hue = 60 * (2 + (b_clamp - r_clamp) / delta)
-
         elif c_max == b_clamp:
             hue = 60 * (4 + (r_clamp - g_clamp) / delta)
 
@@ -221,8 +219,6 @@ class Color:
         m = m * 0.01
         y = y * 0.01
         k = k * 0.01
-
-        print(c, m, y, k)
 
         r = 255 * (1 - c) * (1 - k)
         g = 255 * (1 - m) * (1 - k)
@@ -450,6 +446,6 @@ class ImageColor:
 
     @classmethod
     def from_cmyk(
-        cls, c: int, y: int, m: int, k: int, pixels: PixelArray
+        cls, c: int, m: int, y: int, k: int, pixels: PixelArray
     ) -> Self:
         return cls(Color.from_cmyk(c, m, y, k), pixels)
