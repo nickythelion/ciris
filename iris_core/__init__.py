@@ -449,3 +449,11 @@ class ImageColor:
         cls, c: int, m: int, y: int, k: int, pixels: PixelArray
     ) -> Self:
         return cls(Color.from_cmyk(c, m, y, k), pixels)
+
+    def how_many_pixels(self) -> int:
+        """Returns the number of pixels that share the same color
+
+        Returns:
+            int: how many pixels in a picture have this color
+        """
+        return len(self.pixel_map)
