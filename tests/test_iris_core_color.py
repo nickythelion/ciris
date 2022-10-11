@@ -20,7 +20,7 @@ class TestColor:
         h, s, v = (10000, -99, 1939)
 
         with pytest.raises(ValueError):
-            c = Color(h, s, v)
+            c = Color.from_hsv(h, s, v)
 
     def test_init_from_rgb(self):
         r, g, b = (61, 255, 226)

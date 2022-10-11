@@ -156,6 +156,21 @@ class Color:
             s (int): Saturation
             v (int): Value
         """
+        if not (0 <= h <= 360):
+            raise ValueError(
+                f"Expected Hue to be in range [0..360], but got {h}"
+            )
+
+        if not (0 <= s <= 100):
+            raise ValueError(
+                f"Expected Saturation to be in range [0..100], but got {s}"
+            )
+
+        if not (0 <= v <= 100):
+            raise ValueError(
+                f"Expected Value to be in range [0..100], but got {v}"
+            )
+
         return cls(h, s, v)
 
     @classmethod
