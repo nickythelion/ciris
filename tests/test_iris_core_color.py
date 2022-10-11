@@ -225,3 +225,23 @@ class TestColor:
         assert m == 26
         assert y == 99
         assert k == 1
+
+    def test_color_equality(self):
+        c1 = Color.from_hsv(100, 50, 50)
+        c2 = Color.from_rgb(85, 128, 64)
+        c3 = Color.from_hsv(1, 1, 1)
+
+        assert c1 == c2
+
+        with pytest.raises(AssertionError):
+            assert c1 == c3
+
+    def test_color_hash(self):
+        c1 = Color.from_hsv(100, 50, 50)
+        c2 = Color.from_rgb(85, 128, 64)
+        c3 = Color.from_hsv(1, 1, 1)
+
+        h1, h2, h3 = hash(c1), hash(c2), hash(c3)
+
+        assert h1 == h2
+        assert h1 != h3
