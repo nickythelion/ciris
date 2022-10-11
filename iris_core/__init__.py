@@ -429,25 +429,74 @@ class Color:
 
 class ImageColor:
     def __init__(self, color: Color, pixels: PixelArray) -> None:
+        """Creates an ImageColor object. This object is used to track
+        colors of image pixels by creating a one-to-many relationship (One
+        color can have many pixels, but a pixel can only have one color)
+
+        Args:
+            color (Color): A Color object that represents the color
+            pixels (PixelArray): A 2D array with the pixels' coordinates
+        """
         self.color = color
         self.pixel_map = [PixelCoordinates(i[0], i[1]) for i in pixels]
 
     @classmethod
     def from_rgb(cls, r: int, g: int, b: int, pixels: PixelArray) -> Self:
+        """Creates an ImageColor object using RGB color space. This object is used to track
+        colors of image pixels by creating a one-to-many relationship (One
+        color can have many pixels, but a pixel can only have one color)
+
+        Args:
+            r (int): Red [0..255]
+            g (int): Green [0..255]
+            b (int): Blue [0..255]
+            pixels (PixelArray): A 2D array with the pixels' coordinates
+        """
         return cls(Color.from_rgb(r, g, b), pixels)
 
     @classmethod
     def from_hex(cls, hex_str: str, pixels: PixelArray) -> Self:
+        """Creates an ImageColor object using a hex-string. This object is used to track
+        colors of image pixels by creating a one-to-many relationship (One
+        color can have many pixels, but a pixel can only have one color)
+
+        Args:
+            hex_str (str): a 7-symbol color hex-string (#000000, #FF7609, ...)
+            pixels (PixelArray): A 2D array with the pixels' coordinates
+
+        """
         return cls(Color.from_hex(hex_str), pixels)
 
     @classmethod
     def from_hsv(cls, h: int, s: int, v: int, pixels: PixelArray) -> Self:
+        """Creates an ImageColor object using HSV color space. This object is used to track
+        colors of image pixels by creating a one-to-many relationship (One
+        color can have many pixels, but a pixel can only have one color)
+
+        Args:
+            h (int): Hue [0..360]
+            s (int): Saturation [0..100]
+            v (int): Value [0..100]
+            pixels (PixelArray): A 2D array with the pixels' coordinates
+        """
         return cls(Color.from_hsv(h, s, v), pixels)
 
     @classmethod
     def from_cmyk(
         cls, c: int, m: int, y: int, k: int, pixels: PixelArray
     ) -> Self:
+        """Creates an ImageColor object using CMYK color space. This object is used to track
+        colors of image pixels by creating a one-to-many relationship (One
+        color can have many pixels, but a pixel can only have one color)
+
+        Args:
+            c (int): Cyan [0..100]
+            m (int): Magenta [0..100]
+            y (int): Yellow [0..100]
+            k (int): Black / Key [0..100]
+            pixels (PixelArray): A 2D array with the pixels' coordinates
+
+        """
         return cls(Color.from_cmyk(c, m, y, k), pixels)
 
     def how_many_pixels(self) -> int:
