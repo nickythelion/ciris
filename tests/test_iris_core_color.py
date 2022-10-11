@@ -8,6 +8,7 @@ def test_version():
 
 class TestColor:
     def test_init_from_hsv(self):
+        """Tests the class' initializaton from HSV"""
         h, s, v = (171, 76, 100)
 
         c = Color.from_hsv(h, s, v)
@@ -17,12 +18,14 @@ class TestColor:
         assert c.v == 1.0
 
     def test_init_from_hsv_bad_values(self):
+        """Tests the error handling of HSV initiator if HSV values are bad"""
         h, s, v = (10000, -99, 1939)
 
         with pytest.raises(ValueError):
             c = Color.from_hsv(h, s, v)
 
     def test_init_from_rgb(self):
+        """Tests the class' initializaton from RGB"""
         r, g, b = (61, 255, 226)
 
         c = Color.from_rgb(r, g, b)
@@ -31,13 +34,15 @@ class TestColor:
         assert c.s == 0.76
         assert c.v == 1.0
 
-    def test_init_from_rgb(self):
+    def test_init_from_rgb_bad_values(self):
+        """Tests the error handling of RGB initiator if RGB values are bad"""
         r, g, b = (100, 555, -98)
 
         with pytest.raises(ValueError):
             c = Color.from_rgb(r, g, b)
 
     def test_init_from_hex(self):
+        """Tests the class' initializaton from a hex string"""
         hex_str = "#3dffe2"
 
         c = Color.from_hex(hex_str)
@@ -47,12 +52,14 @@ class TestColor:
         assert c.v == 1.0
 
     def test_init_from_hex_bad_str(self):
+        """Tests the error handling of hex initiator if a string is bad"""
         bad_hex = "#FFFFFF00"
 
         with pytest.raises(ValueError):
             c = Color.from_hex(bad_hex)
 
     def test_init_from_cmyk(self):
+        """Tests the class' initializaton from CMYK"""
         c, m, y, k = (76, 0, 11, 0)
 
         c = Color.from_cmyk(c, m, y, k)
@@ -64,12 +71,14 @@ class TestColor:
         assert v == 100
 
     def test_init_from_cmyk_bad_values(self):
+        """Tests the error handling of CMYK initiator if CMYK values are bad"""
         c, m, y, k = (101, -98, 77777, 64)
 
         with pytest.raises(ValueError):
             c = Color.from_cmyk(c, m, y, k)
 
     def test_color_as_hsv(self):
+        """Tests the conversion to HSV"""
         h, s, v = (171, 76, 100)
 
         c = Color.from_hsv(h, s, v)
@@ -81,6 +90,7 @@ class TestColor:
         assert v1 == 100
 
     def test_color_as_rgb(self):
+        """Tests the conversion to RGB"""
         h, s, v = (171, 76, 100)
 
         c = Color.from_hsv(h, s, v)
@@ -92,6 +102,7 @@ class TestColor:
         assert b == 226
 
     def test_color_as_hex(self):
+        """Tests the conversion to hex string"""
         h, s, v = (171, 76, 100)
 
         c = Color.from_hsv(h, s, v)
@@ -101,6 +112,7 @@ class TestColor:
         assert hex_s == "#3DFFE2"
 
     def test_color_as_cmyk(self):
+        """Tests the conversion to CMYK"""
         h, s, v = (171, 76, 100)
 
         c = Color.from_hsv(h, s, v)
@@ -113,6 +125,7 @@ class TestColor:
         assert k == 0
 
     def test_color_hue_shift_positive(self):
+        """Tests the correctness of positive hue shift"""
         h, s, v = (171, 76, 100)
         c = Color.from_hsv(h, s, v)
 
@@ -121,6 +134,7 @@ class TestColor:
         assert c.as_hex() == "#3DD8FF"
 
     def test_color_hue_shift_negative(self):
+        """Tests the correctness of negative hue shift"""
         h, s, v = (171, 76, 100)
         c = Color.from_hsv(h, s, v)
 
@@ -129,6 +143,8 @@ class TestColor:
         assert c.as_hex() == "#3DFF9E"
 
     def test_color_hue_shift_positive_loop_around(self):
+        """Tests the correctness of positive hue shift where the hue loops
+        around itself (>360)"""
         h, s, v = (171, 76, 100)
         c = Color.from_hsv(h, s, v)
 
@@ -137,6 +153,8 @@ class TestColor:
         assert c.as_hex() == "#FF813D"
 
     def test_color_hue_shift_negative_loop_around(self):
+        """Tests the correctness of negative hue shift where the hue loops
+        around itself (<0)"""
         h, s, v = (171, 76, 100)
         c = Color.from_hsv(h, s, v)
 
@@ -145,6 +163,7 @@ class TestColor:
         assert c.as_hex() == "#FF3DBB"
 
     def test_color_lighten_in_bounds(self):
+        """Tests the corectness of color lightening when the value is in [0..100] range"""
         h, s, v = (171, 76, 40)
         c = Color.from_hsv(h, s, v)
 
@@ -153,6 +172,7 @@ class TestColor:
         assert c.as_hex() == "#37E6CB"
 
     def test_color_lighten_cap(self):
+        """Tests the corectness of color lightening when the value is not in [0..100] range"""
         h, s, v = (171, 76, 50)
         c = Color.from_hsv(h, s, v)
 
@@ -161,6 +181,7 @@ class TestColor:
         assert c.as_hex() == "#3DFFE2"
 
     def test_color_darken_in_bounds(self):
+        """Tests the corectness of color darkening when the value is in [0..100] range"""
         h, s, v = (171, 76, 100)
         c = Color.from_hsv(h, s, v)
 
@@ -169,6 +190,7 @@ class TestColor:
         assert c.as_hex() == "#34D9C0"
 
     def test_color_darken_out_of_bound(self):
+        """Tests the corectness of color darkening when the value is not in [0..100] range"""
         h, s, v = (171, 76, 100)
         c = Color.from_hsv(h, s, v)
 
@@ -177,6 +199,7 @@ class TestColor:
         assert c.as_hex() == "#000000"
 
     def test_color_invert(self):
+        """Tests the correctness of color inversion"""
         h, s, v = (171, 76, 100)
         c = Color.from_hsv(h, s, v)
 
@@ -185,6 +208,7 @@ class TestColor:
         assert c.as_hex() == "#FF3D5A"
 
     def test_color_method_chaining(self):
+        """Tests the correctness of color modifications if the methods are chained"""
         h, s, v = (171, 76, 100)
 
         new_color = (
@@ -194,6 +218,8 @@ class TestColor:
         assert new_color == "#BF2E44"
 
     def test_color_adjust_saturation(self):
+        """Tests the correctness of saturation adjustment if the adjustment
+        amount is in [-100..100] range"""
         h, s, v = (171, 76, 100)
         c = Color.from_hsv(h, s, v)
 
@@ -202,7 +228,8 @@ class TestColor:
         assert c.as_hex() == "#8AFFED"
 
     def test_color_adjust_saturation_capping(self):
-
+        """Tests the correctness of saturation adjustment if the adjustment
+        amount is not in [-100..100] range"""
         h, s, v = (171, 76, 100)
         c = Color.from_hsv(h, s, v)
         c1 = Color.from_hsv(h, s, v)
@@ -215,6 +242,8 @@ class TestColor:
 
     # THIS COLOR BREAKS EVERYTHING
     def test_strange_color(self):
+        """Tests the strange color that was the cause of conversion algorithms
+        breaking (left here just in case)"""
         r, g, b = (252, 186, 3)
 
         c = Color.from_rgb(r, g, b)
@@ -227,6 +256,7 @@ class TestColor:
         assert k == 1
 
     def test_color_equality(self):
+        """Tests whether the comparison between two objects works correctly"""
         c1 = Color.from_hsv(100, 50, 50)
         c2 = Color.from_rgb(85, 128, 64)
         c3 = Color.from_hsv(1, 1, 1)
@@ -237,6 +267,7 @@ class TestColor:
             assert c1 == c3
 
     def test_color_hash(self):
+        """Tests whether the hash() function hashes the Color object correctly"""
         c1 = Color.from_hsv(100, 50, 50)
         c2 = Color.from_rgb(85, 128, 64)
         c3 = Color.from_hsv(1, 1, 1)
@@ -247,6 +278,7 @@ class TestColor:
         assert h1 != h3
 
     def test_color_lookup(self):
+        """Tests whether looking up a color object in an array works correctly"""
         c1 = Color.from_hsv(100, 50, 50)
         c2 = Color.from_rgb(85, 128, 64)
         c3 = Color.from_hsv(1, 1, 1)
