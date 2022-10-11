@@ -245,3 +245,15 @@ class TestColor:
 
         assert h1 == h2
         assert h1 != h3
+
+    def test_color_lookup(self):
+        c1 = Color.from_hsv(100, 50, 50)
+        c2 = Color.from_rgb(85, 128, 64)
+        c3 = Color.from_hsv(1, 1, 1)
+        c4 = Color.from_hex("#558040")
+        c5 = Color.from_rgb(2, 2, 2)
+
+        color_array = [c1, c2, c3]
+
+        assert c4 in color_array
+        assert c5 not in color_array
