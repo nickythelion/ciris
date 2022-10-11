@@ -92,7 +92,19 @@ class Color:
         return f"{self.__class__.__name__}(h={self.h}, s={self.s}, v={self.v})"
 
     def __str__(self) -> str:
-        return self.__repr__
+        return self.__repr__()
+
+    def __eq__(self, __o: object) -> bool:
+        return isinstance(__o, Color) and (
+            (self.h == __o.h) and (self.s == __o.s) and (self.v == __o.v)
+        )
+
+    def __ne__(self, __o: object) -> bool:
+        return not self.__eq__(__o)
+
+    def __hash__(self) -> int:
+        hash_str = f"{self.h},{self.s},{self.v}"
+        return hash(hash_str)
 
     @classmethod
     def from_rgb(cls, r: int, g: int, b: int) -> Self:
