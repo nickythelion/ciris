@@ -410,6 +410,59 @@ class Color:
 
         return self
 
+    def harmony_complementary(self) -> "HarmonyRule":
+        return HarmonyRule(
+            "complementary",
+            self,
+            [Color.from_hsv(self.h, self.s, self.v).hue_shift(180)],
+        )
+
+    def harmony_split_complementary(self) -> "HarmonyRule":
+        return HarmonyRule(
+            "split_complementary",
+            self,
+            [
+                Color.from_hsv(self.h, self.s, self.v).hue_shift(150),
+                Color.from_hsv(self.h, self.s, self.v).hue_shift(210),
+            ],
+        )
+
+    def harmony_triadic(self) -> "HarmonyRule":
+        return HarmonyRule(
+            "triadic",
+            self,
+            [
+                Color.from_hsv(self.h, self.s, self.v).hue_shift(120),
+                Color.from_hsv(self.h, self.s, self.v).hue_shift(240),
+            ],
+        )
+
+    def harmony_tetradic(self) -> "HarmonyRule":
+        return HarmonyRule(
+            "tetradic",
+            self,
+            [
+                Color.from_hsv(self.h, self.s, self.v).hue_shift(90),
+                Color.from_hsv(self.h, self.s, self.v).hue_shift(180),
+                Color.from_hsv(self.h, self.s, self.v).hue_shift(270),
+            ],
+        )
+
+    # This function will return 2 secondary colors, but there's also a rule
+    # for three secondary colors
+    #
+    # This might be implemented as a separate function in the future
+    def harmony_analogous(self) -> "HarmonyRule":
+        return HarmonyRule(
+            "analogous",
+            self,
+            [
+                Color.from_hsv(self.h, self.s, self.v).hue_shift(-30),
+                Color.from_hsv(self.h, self.s, self.v).hue_shift(30),
+            ],
+        )
+
+
 @dataclass
 class HarmonyRule:
     rule_t: str
