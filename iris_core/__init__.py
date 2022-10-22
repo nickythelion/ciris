@@ -1,54 +1,8 @@
 __version__ = "0.1.0"
 
-from typing import List, Optional, Tuple
-from typing_extensions import Self, NewType
 
-PixelArray = NewType("PixelArray", List[List[int]])
-
-
-class PixelCoordinates:
-    def __init__(self, x: int, y: int) -> Self:
-        """Creates a PixelCoordinates object
-
-        Args:
-            x (int): the X coordinate of a pixel
-            y (int): the Y coordinate of a pixel
-
-        Raises:
-            ValueError: if either X or Y is negative
-        """
-        if x < 0 or y < 0:
-            raise ValueError("Pixel coordinates cannot be negative")
-
-        self.x = x
-        self.y = y
-
-    def __repr__(self) -> str:
-        return f"{self.__class__.__name__}(x={self.x}, y={self.y})"
-
-    def __str__(self) -> str:
-        return self.__repr__()
-
-    def as_tuple(self) -> "Tuple[int, int]":
-        """Returns the coordinates as a tuple of length 2
-
-        Returns:
-            Tuple[int, int]: A tuple containing the coordinates: the first
-            one is X, the second one is Y
-        """
-        return (
-            self.x,
-            self.y,
-        )
-
-    def as_list(self) -> "List[int]":
-        """Returns the coordinates as a list.
-        This function is equivalent to list(PixelCoordinates.as_tuple())
-
-        Returns:
-            List[int]: A list os coordinates, containing X and Y coordinates
-        """
-        return list(self.as_tuple())
+from typing import Tuple
+from typing_extensions import Self
 
 
 class Color:
@@ -466,6 +420,9 @@ class ImageColor:
         """
         self.color = color
         self.pixel_map = [PixelCoordinates(i[0], i[1]) for i in pixels]
+
+    def __hash__(self) -> int:
+        return hash(self.color)
 
     @classmethod
     def from_rgb(cls, r: int, g: int, b: int, pixels: PixelArray) -> Self:
