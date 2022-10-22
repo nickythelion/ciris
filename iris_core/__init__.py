@@ -1,5 +1,6 @@
 __version__ = "0.1.0"
 
+from dataclasses import dataclass
 from typing import List, Optional, Tuple
 from typing_extensions import Self, NewType
 
@@ -408,3 +409,34 @@ class Color:
         self.s = new_s
 
         return self
+
+@dataclass
+class HarmonyRule:
+    rule_t: str
+    primary: Color
+    secondary: List[Color]
+
+    def get_base_color(self) -> Color:
+        """Returns the base color of a harmony rule (the root color)
+
+        Returns:
+            Color: the Color object containing the base color info
+        """
+        return self.primary
+
+    def get_secondary_colors(self) -> List[Color]:
+        """Returns the secondary colors of the harmony rule (the colors that
+        were derived from the base color according to the rule)
+
+        Returns:
+            List[Color]: A list of Color objects that contain the secondary color info
+        """
+        return self.secondary
+
+    def harmony_rule_type(self) -> str:
+        """Returns the type of harmony rule
+
+        Returns:
+            str: the type
+        """
+        return self.rule_t
