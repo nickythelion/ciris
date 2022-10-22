@@ -1,5 +1,7 @@
 __version__ = "0.1.0"
 
+from typing import List, Optional, Tuple
+from typing_extensions import Self, NewType
 
 from typing import Tuple
 from typing_extensions import Self
