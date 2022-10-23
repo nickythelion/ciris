@@ -465,9 +465,24 @@ class Color:
 
 @dataclass
 class HarmonyRule:
-    rule_t: str
-    primary: Color
-    secondary: List[Color]
+    """A dataclass that represents a certain color harmony rule and contains
+    all the colors that are related to it.
+
+    Note that this class is a data container. It is only storing data. The actual
+    calculation is done by Color.harmony_<harmony_type> methods.
+
+    Attributes:
+        rule_type: [str] -> An attribute that stores the type of the rule.
+        The valid values are "complementary", "split_complementary", "triadic",
+        "tetradic", "analogous"
+
+        base_color: Color -> A Color object that was used to derive the secondary colors.
+
+    """
+
+    rule_type: str
+    base_color: Color
+    secondary_colors: List[Color]
 
     def get_base_color(self) -> Color:
         """Returns the base color of a harmony rule (the root color)
@@ -475,7 +490,7 @@ class HarmonyRule:
         Returns:
             Color: the Color object containing the base color info
         """
-        return self.primary
+        return self.base_color
 
     def get_secondary_colors(self) -> List[Color]:
         """Returns the secondary colors of the harmony rule (the colors that
@@ -484,7 +499,7 @@ class HarmonyRule:
         Returns:
             List[Color]: A list of Color objects that contain the secondary color info
         """
-        return self.secondary
+        return self.secondary_colors
 
     def harmony_rule_type(self) -> str:
         """Returns the type of harmony rule
@@ -492,4 +507,4 @@ class HarmonyRule:
         Returns:
             str: the type
         """
-        return self.rule_t
+        return self.rule_type
