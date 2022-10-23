@@ -411,6 +411,12 @@ class Color:
         return self
 
     def harmony_complementary(self) -> "HarmonyRule":
+        """Applies the complementary color harmony rule to the color
+
+        Returns:
+            HarmonyRule: A HarmonyRule class describing the rule and containing
+            all the colors
+        """
         return HarmonyRule(
             "complementary",
             self,
@@ -418,6 +424,12 @@ class Color:
         )
 
     def harmony_split_complementary(self) -> "HarmonyRule":
+        """Applies the split complementary color harmony rule to the color
+
+        Returns:
+            HarmonyRule: A HarmonyRule class describing the rule and containing
+            all the colors
+        """
         return HarmonyRule(
             "split_complementary",
             self,
@@ -428,6 +440,12 @@ class Color:
         )
 
     def harmony_triadic(self) -> "HarmonyRule":
+        """Applies the triadic color harmony rule to the color
+
+        Returns:
+            HarmonyRule: A HarmonyRule class describing the rule and containing
+            all the colors
+        """
         return HarmonyRule(
             "triadic",
             self,
@@ -438,6 +456,12 @@ class Color:
         )
 
     def harmony_tetradic(self) -> "HarmonyRule":
+        """Applies the tetradic color harmony rule to the color
+
+        Returns:
+            HarmonyRule: A HarmonyRule class describing the rule and containing
+            all the colors
+        """
         return HarmonyRule(
             "tetradic",
             self,
@@ -453,6 +477,12 @@ class Color:
     #
     # This might be implemented as a separate function in the future
     def harmony_analogous(self) -> "HarmonyRule":
+        """Applies the analogous color harmony rule to the color
+
+        Returns:
+            HarmonyRule: A HarmonyRule class describing the rule and containing
+            all the colors
+        """
         return HarmonyRule(
             "analogous",
             self,
