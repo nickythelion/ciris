@@ -507,6 +507,8 @@ class HarmonyRule:
         "tetradic", "analogous"
 
         base_color: Color -> A Color object that was used to derive the secondary colors.
+        secondary_colors: List[Colors] -> A list of colors that were derived from the base color accoring to
+        the applied harmony rule
 
     """
 
