@@ -482,17 +482,18 @@ class Color:
     # for three secondary colors
     #
     # This might be implemented as a separate function in the future
-    def harmony_analogous_3_colors(self) -> "HarmonyRule":
+    def harmony_analogous_3_colors(self, phi: int = 30) -> "HarmonyRule":
         """Applies the analogous color harmony rule to the color. The resulting
         scheme consists of a base color and 2 derived colors, thus resulting in
         a 3-color palette
+
+        Arguments:
+            phi (int): an offset that will be used. Defaault is 30 degrees
 
         Returns:
             HarmonyRule: A HarmonyRule class describing the rule and containing
             3 total colors
         """
-
-        phi = 30
 
         return HarmonyRule(
             "analogous",
@@ -503,21 +504,18 @@ class Color:
             ],
         )
 
-    def harmony_analogous_5_colors(self) -> "HarmonyRule":
+    def harmony_analogous_5_colors(self, phi: int = 30) -> "HarmonyRule":
         """Applies the analogous color harmony rule to the color. The resulting
         scheme consists of a base color and 4 derived colors, thus resulting in
         a 5-color palette
 
-        Returns:
-            HarmonyRule: A HarmonyRule class describing the rule and containing
-            5 total colors
+        Arguments:
+            phi (int): an offset that will be used. Default is 30 degrees
 
         Returns:
             HarmonyRule: A HarmonyRule class describing the rule and containing
             5 total colors
         """
-
-        phi = 30
 
         return HarmonyRule(
             "analogous",
