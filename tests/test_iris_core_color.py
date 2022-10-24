@@ -289,3 +289,9 @@ class TestColor:
 
         assert c4 in color_array
         assert c5 not in color_array
+
+    def test_color_harmony_complementary(self):
+        """Tests the complementary color harmony rule"""
+
+        c = Color.from_hex("#000000")
+        p = c.harmony_complementary()
