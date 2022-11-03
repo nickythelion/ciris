@@ -1,5 +1,5 @@
 import pytest
-from iris_core import Color, __version__
+from iris import Color, __version__
 
 
 def test_version():
