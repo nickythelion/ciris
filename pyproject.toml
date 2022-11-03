@@ -1,7 +1,7 @@
 [tool.poetry]
-name = "iris-core"
-version = "0.1.0"
-description = "A library containing core functionality for Iris"
+name = "iris"
+version = "1.0.0"
+description = "A Python color processing library"
 authors = ["nickythelion <nickythelionfurry@yandex.ru>"]
 
 [tool.poetry.dependencies]

@@ -377,7 +377,7 @@ class Color:
             amount (int): the amount to darken the color by
 
         Args:
-            amount (int): _description_
+            amount (int): the amount to darken the color by
         """
         self.lighten(amount * -1)
 
@@ -389,16 +389,16 @@ class Color:
 
         return self
 
-    def adjust_saturation(self, percentage: int) -> Self:
+    def adjust_saturation(self, amount: int) -> Self:
         """Adjusts the color's saturation level.
 
         Args:
-            percentage (int): how much to adjust the level by. If the adjustment
+            amount (int): how much to adjust the level by. If the adjustment
             brings the saturation level out of range [0..100], then the level will be
             capped. For example, calling Color.adjust_saturation(-10000) on cyan
-            will make the color white.
+            will make the color a shade of gray.
         """
-        new_s = self.s + percentage * 0.01
+        new_s = self.s + amount * 0.01
 
         if new_s > 1.0:
             new_s = 1.0
@@ -423,15 +423,16 @@ class Color:
             [Color.from_hsv(self.h, self.s, self.v).hue_shift(180)],
         )
 
-    def harmony_split_complementary(self) -> "HarmonyRule":
+    def harmony_split_complementary(self, phi: int = 150) -> "HarmonyRule":
         """Applies the split complementary color harmony rule to the color
+
+        Arguments:
+            phi (int): an offset that will be used. Default is 150 degrees
 
         Returns:
             HarmonyRule: A HarmonyRule class describing the rule and containing
             all the colors
         """
-
-        phi = 150
 
         return HarmonyRule(
             "split_complementary",
@@ -545,7 +546,7 @@ class HarmonyRule:
         """
         return self.secondary_colors
 
-    def harmony_rule_type(self) -> str:
+    def get_harmony_rule_type(self) -> str:
         """Returns the type of harmony rule
 
         Returns:
