@@ -487,12 +487,13 @@ class Color:
         scheme consists of a base color and 2 derived colors, thus resulting in
         a 3-color palette
 
+        Arguments:
+            phi (int): an offset that will be used. Defaault is 30 degrees
+
         Returns:
             HarmonyRule: A HarmonyRule class describing the rule and containing
             3 total colors
         """
-
-        phi = 30
 
         return HarmonyRule(
             "analogous",
