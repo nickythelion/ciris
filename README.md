@@ -312,3 +312,9 @@ from iris import Color
 new_color = Color.from_rgb(old.r, old.g, old.b).invert().lighten(15).hue_shift(10).as_cmyk()
 ```
 
+# Color Harmony Sources
+Here you can find the source material that was used to create color harmony rules
+* https://en.wikipedia.org/wiki/Harmony_(color)
+* https://blog.thepapermillstore.com/color-theory-color-harmonies/
+* https://blog.matthewgove.com/2021/07/02/color-theory-a-simple-exercise-in-mathematics-and-graphic-design/
+
