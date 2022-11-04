@@ -1,6 +1,6 @@
 # Iris
 
-Iris is a lightweight library that specialises on working with color.
+Iris is a lightweight library that specializes on working with color.
 The package does not rely on any third-party dependencies.
 
 # Color class
@@ -25,7 +25,7 @@ hue, saturation, value = 260, 90, 90
 
 c = Color.from_hsv(hue, saturation, value)
 ```
-In this case, both methods are equivalent. The latter was added for the sake of consistensy with the other constructors.
+In this case, both methods are equivalent. The latter was added for the sake of consistency with the other constructors.
 
 ## Creating a Color object using RGB values
 The Color object provides a `Color.from_rgb()` function which can be used to create Color object from RGB band values, like this:
@@ -57,7 +57,7 @@ my_hex_str = "#00FF56"
 
 c = Color.from_hex(my_hex_str)
 ```
-Note that `Color.from_hex()` method only accepts a 7-symbol hex-string (a pound sign, 2 symbold for red, 2 symbols for green, 2 symbols for blue). Other variations, such as ARGB, are not supported.
+Note that `Color.from_hex()` method only accepts a 7-symbol hex-string (a pound sign, 2 symbols for red, 2 symbols for green, 2 symbols for blue). Other variations, such as ARGB, are not supported.
 
 ## Representing the color as HSV
 Since the HSV space is the space that the Color object uses to store data, no conversion is necessary.
@@ -97,7 +97,7 @@ cmyk_tuple = c.as_cmyk()
 This method returns a tuple with the signature `(c_value, m_value, y_value, k_value)`. Note that these values are integers in range [0..100].
 
 ## Altering the hue of the color
-To alter the color's hue, use the `Color.hue_shift()` method. The method takes a required positional argument `amount: int`, whic specifies the amount in degrees on a color wheel that the hue will be shifted by.
+To alter the color's hue, use the `Color.hue_shift()` method. The method takes a required positional argument `amount: int`, which specifies the amount in degrees on a color wheel that the hue will be shifted by.
 
 For example, this code will shift the color's hue by 30 degrees clockwise:
 ```python
@@ -109,7 +109,7 @@ c = Color.from_hsv(hue, saturation, value)
 c.hue_shift(30)
 print(c.as_hsv()) # (290, 90, 90)
 ```
-You can also pass a negative integer into the method to shift the hue counterclockwise. For example, the code below shifts the color's hue by 60 degress counterclockwise:
+You can also pass a negative integer into the method to shift the hue counterclockwise. For example, the code below shifts the color's hue by 60 degrees counterclockwise:
 ```python
 from iris import Color
 
@@ -133,7 +133,7 @@ print(c.as_hsv()) # (20, 90, 90)
 The same logic works for negative shifts.
 
 ## Altering the saturation of the color
-To alter the color's saturation, use the `Color.adjust_saturation()` method. It taked a required positional argument `amount: int`, that indicated the amount that the saturation needs to be adjusted by.
+To alter the color's saturation, use the `Color.adjust_saturation()` method. It takes a required positional argument `amount: int`, that indicated the amount that the saturation needs to be adjusted by.
 
 For example, this code below raises the color's saturation by 5%:
 ```python
@@ -220,8 +220,8 @@ c.invert()
 print(c.as_hsv()) # (80, 90, 90)
 ```
 
-## Applying complemetary harmony rule to the color
-To apply the complementaty rule to the current color, use `Color.harmony_complementary()` method:
+## Applying complementary harmony rule to the color
+To apply the complementary rule to the current color, use `Color.harmony_complementary()` method:
 ```python
 from iris import Color
 
@@ -232,8 +232,8 @@ rule = c.harmony_complementary()
 ```
 This method returns a [HarmonyRule](#harmonyrule-class) object.
 
-## Applying split complemetary harmony rule to the color
-To apply the split complementaty rule to the current color, use `Color.harmony_split_complementary()` method. You can also pass an optional argument `phi: int` that indicates the offset in degrees that will be used. By default it is 150deg:
+## Applying split complementary harmony rule to the color
+To apply the split complementary rule to the current color, use `Color.harmony_split_complementary()` method. You can also pass an optional argument `phi: int` that indicates the offset in degrees that will be used. By default it is 150deg:
 ```python
 from iris import Color
 
@@ -272,7 +272,7 @@ rule = c.harmony_tetradic()
 This method returns a [HarmonyRule](#harmonyrule-class) object.
 
 ## Applying analogous harmony rule to the color
-To apply the split complementaty rule to the current color, use `Color.harmony_analogous()` method. You can also pass an optional argument `phi: int` that indicates the offset in degrees that will be used. By default it is 30deg:
+To apply the split complementary rule to the current color, use `Color.harmony_analogous()` method. You can also pass an optional argument `phi: int` that indicates the offset in degrees that will be used. By default it is 30deg:
 ```python
 from iris import Color
 
