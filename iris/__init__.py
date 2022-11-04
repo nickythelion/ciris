@@ -420,7 +420,11 @@ class Color:
         return HarmonyRule(
             "complementary",
             self,
-            [Color.from_hsv(self.h, self.s, self.v).hue_shift(180)],
+            [
+                Color.from_hsv(
+                    self.h, int(self.s * 100), int(self.v * 100)
+                ).hue_shift(180)
+            ],
         )
 
     def harmony_split_complementary(self, phi: int = 150) -> "HarmonyRule":
@@ -438,8 +442,12 @@ class Color:
             "split_complementary",
             self,
             [
-                Color.from_hsv(self.h, self.s, self.v).hue_shift(phi),
-                Color.from_hsv(self.h, self.s, self.v).hue_shift(360 - phi),
+                Color.from_hsv(
+                    self.h, int(self.s * 100), int(self.v * 100)
+                ).hue_shift(phi),
+                Color.from_hsv(
+                    self.h, int(self.s * 100), int(self.v * 100)
+                ).hue_shift(360 - phi),
             ],
         )
 
@@ -454,8 +462,12 @@ class Color:
             "triadic",
             self,
             [
-                Color.from_hsv(self.h, self.s, self.v).hue_shift(120),
-                Color.from_hsv(self.h, self.s, self.v).hue_shift(240),
+                Color.from_hsv(
+                    self.h, int(self.s * 100), int(self.v * 100)
+                ).hue_shift(120),
+                Color.from_hsv(
+                    self.h, int(self.s * 100), int(self.v * 100)
+                ).hue_shift(240),
             ],
         )
 
@@ -473,9 +485,15 @@ class Color:
             "tetradic",
             self,
             [
-                Color.from_hsv(self.h, self.s, self.v).hue_shift(phi),
-                Color.from_hsv(self.h, self.s, self.v).hue_shift(phi * 2),
-                Color.from_hsv(self.h, self.s, self.v).hue_shift(phi * 3),
+                Color.from_hsv(
+                    self.h, int(self.s * 100), int(self.v * 100)
+                ).hue_shift(phi),
+                Color.from_hsv(
+                    self.h, int(self.s * 100), int(self.v * 100)
+                ).hue_shift(phi * 2),
+                Color.from_hsv(
+                    self.h, int(self.s * 100), int(self.v * 100)
+                ).hue_shift(phi * 3),
             ],
         )
 
@@ -500,8 +518,12 @@ class Color:
             "analogous",
             self,
             [
-                Color.from_hsv(self.h, self.s, self.v).hue_shift(phi * -1),
-                Color.from_hsv(self.h, self.s, self.v).hue_shift(phi),
+                Color.from_hsv(
+                    self.h, int(self.s * 100), int(self.v * 100)
+                ).hue_shift(phi * -1),
+                Color.from_hsv(
+                    self.h, int(self.s * 100), int(self.v * 100)
+                ).hue_shift(phi),
             ],
         )
 
