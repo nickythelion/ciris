@@ -284,6 +284,28 @@ rule = c.harmony_split_complementary(phi=40) # The offset used is 40deg
 
 This method returns a [HarmonyRule](#harmonyrule-class) object.
 
+## Comparing the colors
+To compare Color objects, use a simple `==` statement.
+
+For example, the code below wil print `The colors are the same`:
+```python
+from iris import Color
+
+if Color(255, 100, 100) == Color.from_hsv(255, 100, 100):
+    print("The colors are the same")
+```
+
+## Looking up colors in a list
+The Color objects are hashable, meaning that you can easily check if the color 
+is already stored an a list on colors using a simple `in` statement:
+```python
+from iris import Color
+
+b_and_w = [Color.from_hex("#FFFFFF"), Color.from_hex("#000000")]
+print(Color.from_rgb(0, 0, 0) in b_and_w) # True
+print(Color.from_rgb(62, 81, 22) in b_and_w) # False
+```
+
 # HarmonyRule class
 This class is a dataclass that is used by Iris to describe any harmony rule that has been applied to the color.
 
