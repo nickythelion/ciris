@@ -1,5 +1,6 @@
 __version__ = "0.1.0"
 
+from dataclasses import dataclass
 from typing import List, Optional, Tuple
 from typing_extensions import Self, NewType
 
@@ -376,7 +377,7 @@ class Color:
             amount (int): the amount to darken the color by
 
         Args:
-            amount (int): _description_
+            amount (int): the amount to darken the color by
         """
         self.lighten(amount * -1)
 
@@ -388,16 +389,16 @@ class Color:
 
         return self
 
-    def adjust_saturation(self, percentage: int) -> Self:
+    def adjust_saturation(self, amount: int) -> Self:
         """Adjusts the color's saturation level.
 
         Args:
-            percentage (int): how much to adjust the level by. If the adjustment
+            amount (int): how much to adjust the level by. If the adjustment
             brings the saturation level out of range [0..100], then the level will be
             capped. For example, calling Color.adjust_saturation(-10000) on cyan
-            will make the color white.
+            will make the color a shade of gray.
         """
-        new_s = self.s + percentage * 0.01
+        new_s = self.s + amount * 0.01
 
         if new_s > 1.0:
             new_s = 1.0
@@ -408,3 +409,169 @@ class Color:
         self.s = new_s
 
         return self
+
+    def harmony_complementary(self) -> "HarmonyRule":
+        """Applies the complementary color harmony rule to the color
+
+        Returns:
+            HarmonyRule: A HarmonyRule class describing the rule and containing
+            all the colors
+        """
+        return HarmonyRule(
+            "complementary",
+            self,
+            [
+                Color.from_hsv(
+                    self.h, int(self.s * 100), int(self.v * 100)
+                ).hue_shift(180)
+            ],
+        )
+
+    def harmony_split_complementary(self, phi: int = 150) -> "HarmonyRule":
+        """Applies the split complementary color harmony rule to the color
+
+        Arguments:
+            phi (int): an offset that will be used. Default is 150 degrees
+
+        Returns:
+            HarmonyRule: A HarmonyRule class describing the rule and containing
+            all the colors
+        """
+
+        return HarmonyRule(
+            "split_complementary",
+            self,
+            [
+                Color.from_hsv(
+                    self.h, int(self.s * 100), int(self.v * 100)
+                ).hue_shift(phi),
+                Color.from_hsv(
+                    self.h, int(self.s * 100), int(self.v * 100)
+                ).hue_shift(360 - phi),
+            ],
+        )
+
+    def harmony_triadic(self) -> "HarmonyRule":
+        """Applies the triadic color harmony rule to the color
+
+        Returns:
+            HarmonyRule: A HarmonyRule class describing the rule and containing
+            all the colors
+        """
+        return HarmonyRule(
+            "triadic",
+            self,
+            [
+                Color.from_hsv(
+                    self.h, int(self.s * 100), int(self.v * 100)
+                ).hue_shift(120),
+                Color.from_hsv(
+                    self.h, int(self.s * 100), int(self.v * 100)
+                ).hue_shift(240),
+            ],
+        )
+
+    def harmony_tetradic(self) -> "HarmonyRule":
+        """Applies the tetradic color harmony rule to the color
+
+        Returns:
+            HarmonyRule: A HarmonyRule class describing the rule and containing
+            all the colors
+        """
+
+        phi = 90
+
+        return HarmonyRule(
+            "tetradic",
+            self,
+            [
+                Color.from_hsv(
+                    self.h, int(self.s * 100), int(self.v * 100)
+                ).hue_shift(phi),
+                Color.from_hsv(
+                    self.h, int(self.s * 100), int(self.v * 100)
+                ).hue_shift(phi * 2),
+                Color.from_hsv(
+                    self.h, int(self.s * 100), int(self.v * 100)
+                ).hue_shift(phi * 3),
+            ],
+        )
+
+    # This function will return 2 secondary colors, but there's also a rule
+    # for three secondary colors
+    #
+    # This might be implemented as a separate function in the future
+    def harmony_analogous(self, phi: int = 30) -> "HarmonyRule":
+        """Applies the analogous color harmony rule to the color. The resulting
+        scheme consists of a base color and 2 derived colors, thus resulting in
+        a 3-color palette
+
+        Arguments:
+            phi (int): an offset that will be used. Default is 30 degrees
+
+        Returns:
+            HarmonyRule: A HarmonyRule class describing the rule and containing
+            3 total colors
+        """
+
+        return HarmonyRule(
+            "analogous",
+            self,
+            [
+                Color.from_hsv(
+                    self.h, int(self.s * 100), int(self.v * 100)
+                ).hue_shift(phi * -1),
+                Color.from_hsv(
+                    self.h, int(self.s * 100), int(self.v * 100)
+                ).hue_shift(phi),
+            ],
+        )
+
+
+@dataclass
+class HarmonyRule:
+    """A dataclass that represents a certain color harmony rule and contains
+    all the colors that are related to it.
+
+    Note that this class is a data container. It is only storing data. The actual
+    calculation is done by Color.harmony_<harmony_type> methods.
+
+    Attributes:
+        rule_type: [str] -> An attribute that stores the type of the rule.
+        The valid values are "complementary", "split_complementary", "triadic",
+        "tetradic", "analogous"
+
+        base_color: Color -> A Color object that was used to derive the secondary colors.
+        secondary_colors: List[Colors] -> A list of colors that were derived from the base color accoring to
+        the applied harmony rule
+
+    """
+
+    rule_type: str
+    base_color: Color
+    secondary_colors: List[Color]
+
+    def get_base_color(self) -> Color:
+        """Returns the base color of a harmony rule (the root color)
+
+        Returns:
+            Color: the Color object containing the base color info
+        """
+        return self.base_color
+
+    def get_secondary_colors(self) -> List[Color]:
+        """Returns the secondary colors of the harmony rule (the colors that
+        were derived from the base color according to the rule)
+
+        Returns:
+            List[Color]: A list of Color objects that contain the secondary color info
+        """
+        return self.secondary_colors
+
+    def get_harmony_rule_type(self) -> str:
+        """Returns the type of harmony rule
+
+        Returns:
+            str: the type
+        """
+        return self.rule_type

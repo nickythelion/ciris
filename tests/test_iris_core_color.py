@@ -1,5 +1,6 @@
 import pytest
-from iris_core import Color, __version__
+from iris import Color, __version__
+
 
 
 def test_version():
@@ -289,3 +290,70 @@ class TestColor:
 
         assert c4 in color_array
         assert c5 not in color_array
+
+    def test_color_harmony_complementary(self):
+        """Tests the complementary color harmony rule"""
+
+        c = Color.from_rgb(3, 78, 252)
+        p = c.harmony_complementary()
+
+        print(p.get_secondary_colors()[0].as_hsv())
+        assert p.get_secondary_colors()[0].as_hsv() == (42, 99, 99)
+
+    def test_color_harmony_split_complementary(self):
+        """Tests the split complementary color harmony rule"""
+
+        c = Color.from_rgb(3, 78, 252)
+        p = c.harmony_split_complementary()
+
+        sec = p.get_secondary_colors()
+        assert len(sec) == 2
+        assert Color(72, 99, 99) in sec
+        assert Color(12, 99, 99) in sec
+
+        with pytest.raises(AssertionError):
+            assert Color(1, 100, 100) in sec
+
+    def test_color_harmony_triadic(self):
+        """Tests the triadic color harmony rule"""
+
+        c = Color.from_rgb(3, 78, 252)
+        p = c.harmony_triadic()
+
+        sec = p.get_secondary_colors()
+
+        assert len(sec) == 2
+        assert Color(342, 99, 99) in sec
+        assert Color(102, 99, 99) in sec
+
+        with pytest.raises(AssertionError):
+            assert Color(1, 100, 100) in sec
+
+    def test_color_harmony_tetradic(self):
+        """Tests the tetradic color harmony rule"""
+
+        c = Color.from_rgb(3, 78, 252)
+        p = c.harmony_tetradic()
+
+        sec = p.get_secondary_colors()
+        assert len(sec) == 3
+        assert Color(312, 99, 99) in sec
+        assert Color(42, 99, 99) in sec
+        assert Color(132, 99, 99) in sec
+
+        with pytest.raises(AssertionError):
+            assert Color(1, 100, 100) in sec
+
+    def test_color_harmony_analogous(self):
+        """Tests the analogous color harmony rule"""
+
+        c = Color.from_rgb(3, 78, 252)
+        p = c.harmony_analogous()
+
+        sec = p.get_secondary_colors()
+        assert len(sec) == 2
+        assert Color(252, 99, 99) in sec
+        assert Color(192, 99, 99) in sec
+
+        with pytest.raises(AssertionError):
+            assert Color(1, 100, 100) in sec
