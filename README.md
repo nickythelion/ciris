@@ -297,7 +297,7 @@ if Color(255, 100, 100) == Color.from_hsv(255, 100, 100):
 
 ## Looking up colors in a list
 The Color objects are hashable, meaning that you can easily check if the color 
-is already stored an a list on colors using a simple `in` statement:
+is already stored an a list of colors using a simple `in` statement:
 ```python
 from iris import Color
 
