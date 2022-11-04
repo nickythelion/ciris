@@ -57,7 +57,7 @@ my_hex_str = "#00FF56"
 
 c = Color.from_hex(my_hex_str)
 ```
-Note that `Color.from_hex()` method only accepts a 7-symbol hex-string (a pound sign, 2 symbold for red, 2 symbols for green, 2 symbols for blue). Other variations, such as ARGB, are not supported.
+Note that `Color.from_hex()` method only accepts a 7-symbol hex-string (a pound sign, 2 symbols for red, 2 symbols for green, 2 symbols for blue). Other variations, such as ARGB, are not supported.
 
 ## Representing the color as HSV
 Since the HSV space is the space that the Color object uses to store data, no conversion is necessary.
