@@ -2,14 +2,13 @@ import pytest
 from iris import Color, __version__
 
 
-
 def test_version():
-    assert __version__ == "0.1.0"
+    assert __version__ == "1.0.0"
 
 
 class TestColor:
     def test_init_from_hsv(self):
-        """Tests the class' initializaton from HSV"""
+        """Tests the class' initialization from HSV"""
         h, s, v = (171, 76, 100)
 
         c = Color.from_hsv(h, s, v)
@@ -26,7 +25,7 @@ class TestColor:
             c = Color.from_hsv(h, s, v)
 
     def test_init_from_rgb(self):
-        """Tests the class' initializaton from RGB"""
+        """Tests the class' initialization from RGB"""
         r, g, b = (61, 255, 226)
 
         c = Color.from_rgb(r, g, b)
@@ -43,7 +42,7 @@ class TestColor:
             c = Color.from_rgb(r, g, b)
 
     def test_init_from_hex(self):
-        """Tests the class' initializaton from a hex string"""
+        """Tests the class' initialization from a hex string"""
         hex_str = "#3dffe2"
 
         c = Color.from_hex(hex_str)
@@ -60,7 +59,7 @@ class TestColor:
             c = Color.from_hex(bad_hex)
 
     def test_init_from_cmyk(self):
-        """Tests the class' initializaton from CMYK"""
+        """Tests the class' initialization from CMYK"""
         c, m, y, k = (76, 0, 11, 0)
 
         c = Color.from_cmyk(c, m, y, k)
@@ -164,7 +163,7 @@ class TestColor:
         assert c.as_hex() == "#FF3DBB"
 
     def test_color_lighten_in_bounds(self):
-        """Tests the corectness of color lightening when the value is in [0..100] range"""
+        """Tests the correctness of color lightening when the value is in [0..100] range"""
         h, s, v = (171, 76, 40)
         c = Color.from_hsv(h, s, v)
 
@@ -173,7 +172,7 @@ class TestColor:
         assert c.as_hex() == "#37E6CB"
 
     def test_color_lighten_cap(self):
-        """Tests the corectness of color lightening when the value is not in [0..100] range"""
+        """Tests the correctness of color lightening when the value is not in [0..100] range"""
         h, s, v = (171, 76, 50)
         c = Color.from_hsv(h, s, v)
 
@@ -182,7 +181,7 @@ class TestColor:
         assert c.as_hex() == "#3DFFE2"
 
     def test_color_darken_in_bounds(self):
-        """Tests the corectness of color darkening when the value is in [0..100] range"""
+        """Tests the correctness of color darkening when the value is in [0..100] range"""
         h, s, v = (171, 76, 100)
         c = Color.from_hsv(h, s, v)
 
@@ -191,7 +190,7 @@ class TestColor:
         assert c.as_hex() == "#34D9C0"
 
     def test_color_darken_out_of_bound(self):
-        """Tests the corectness of color darkening when the value is not in [0..100] range"""
+        """Tests the correctness of color darkening when the value is not in [0..100] range"""
         h, s, v = (171, 76, 100)
         c = Color.from_hsv(h, s, v)
 
