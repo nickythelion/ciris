@@ -1,4 +1,4 @@
-__version__ = "0.1.0"
+__version__ = "1.0.0"
 
 from dataclasses import dataclass
 from typing import List, Optional, Tuple
@@ -144,7 +144,7 @@ class Color:
 
     @classmethod
     def from_hex(cls, clr_hex: str) -> Self:
-        """Creates the Color object uning the HEX string
+        """Creates the Color object using the HEX string
 
         Args:
             clr_hex (str): a hex-string (7-symbol). Other formats, such as a
@@ -162,7 +162,7 @@ class Color:
 
         clr_hex = clr_hex.replace("#", "")
 
-        chl_size = len(clr_hex) // 3  # Three channles: R, G, B
+        chl_size = len(clr_hex) // 3  # Three channels: R, G, B
 
         clhrs = [
             clr_hex[ch : ch + chl_size]
@@ -542,7 +542,7 @@ class HarmonyRule:
         "tetradic", "analogous"
 
         base_color: Color -> A Color object that was used to derive the secondary colors.
-        secondary_colors: List[Colors] -> A list of colors that were derived from the base color accoring to
+        secondary_colors: List[Colors] -> A list of colors that were derived from the base color according to
         the applied harmony rule
 
     """
