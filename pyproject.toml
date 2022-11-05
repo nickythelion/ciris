@@ -6,7 +6,7 @@ requires = [
 ]
 
 [project]
-name = "iris"
+name = "ciris"
 version = "1.0.0"
 authors = [
     {name = "nickythelion", email = "nickythelionfurry@yandex.ru"}
