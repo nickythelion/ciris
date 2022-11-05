@@ -3,3 +3,5 @@ __pycache__
 no-git.*.*
 *.lock
 .vscode
+.python-version
+venv-*
