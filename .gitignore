@@ -5,3 +5,5 @@ no-git.*.*
 .vscode
 .python-version
 venv-*
+dist/*
+*.egg-info/
