@@ -1,6 +1,9 @@
 # Ciris
 
 ![GitHub](https://img.shields.io/github/license/nickythelion/ciris?style=plastic)
+![PyPI](https://img.shields.io/pypi/v/ciris)
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/ciris)
+![PyPI - Wheel](https://img.shields.io/pypi/wheel/ciris)
 
 
 Ciris is a lightweight library that specializes on working with color.
