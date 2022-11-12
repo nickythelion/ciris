@@ -1,8 +1,8 @@
 __version__ = "1.0.0"
 
 from dataclasses import dataclass
-from typing import List, Optional, Tuple
-from typing_extensions import Self, NewType
+from typing import List, Tuple
+from typing_extensions import Self
 
 from typing import Tuple
 from typing_extensions import Self
