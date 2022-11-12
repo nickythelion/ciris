@@ -4,11 +4,14 @@ from dataclasses import dataclass
 from typing import List, Tuple
 from typing_extensions import Self
 
-from typing import Tuple
-from typing_extensions import Self
-
 
 class Color:
+    __slots__ = (
+        "h",
+        "s",
+        "v",
+    )
+
     def __init__(self, h: int, s: int, v: int) -> None:
         """Creates a Color object. It uses HSV color scheme as its primary,
         thus its usage is required for direct initialization (c = Color(...)).
@@ -35,7 +38,6 @@ class Color:
             raise ValueError(
                 f"Expected Saturation to be in range [0..100], but got {s}"
             )
-
         if not (0 <= v <= 100):
             raise ValueError(
                 f"Expected Value to be in range [0..100], but got {v}"
@@ -46,10 +48,10 @@ class Color:
         self.v = v * 0.01  # Need to clamp the value in range [0..1]
 
     def __repr__(self) -> str:
-        return f"{self.__class__.__name__}(h={self.h}, s={self.s}, v={self.v})"
+        return self.__str__()
 
     def __str__(self) -> str:
-        return self.__repr__()
+        return f"{self.__class__.__name__}(h={self.h}, s={self.s}, v={self.v})"
 
     def __eq__(self, __o: object) -> bool:
         return isinstance(__o, Color) and (
